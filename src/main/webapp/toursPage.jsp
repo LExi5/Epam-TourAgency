@@ -50,15 +50,9 @@
                 <p class="card-text">Price: ${tour.price} €</p>
                 <p class="card-text">Start Date: ${tour.startDate}</p>
                 <p class="card-text">End Date: ${tour.endDate}</p>
+                <p class="card-text">Orders: ${tour.countPeople}</p>
             </div>
             <br/>
-            <div class="row" >
-                <%if (request.getAttribute("orderMassage") == "Tour been ordered") {%>
-                    <p style = "color:green">Tour been ordered</p>
-                <%} else if(request.getAttribute("orderMassage") == "You have already ordered this tour"){%>
-                <p style = "color:red">You have already ordered this tour</p>
-                <%}%>
-            </div>
             <div class="col">
                 <%if (session.getAttribute("access") == USER) {%>
                 <a href="addOrder?tourId=${tour.id}" class="btn btn-primary">Order</a>

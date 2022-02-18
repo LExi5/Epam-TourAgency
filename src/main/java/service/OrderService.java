@@ -22,10 +22,11 @@ public class OrderService {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
         userId = user.getId();
-
-        if(new DAOFactory().getOrderDAO("jdbc").getUserOrder(userId)==null){
+        TourOrder order = new DAOFactory().getOrderDAO("jdbc").getUserOrder(userId,tourId);
+        if(order == null){
             System.out.println("Order never been ordered");
             if(new DAOFactory().getOrderDAO("jdbc").addOrder(new TourOrder(userId,tourId, Status.REGISTERED, date))){
+                new DAOFactory().getTourDAO("jdbc").increment(tourId);
                 return true;
             }
             return false;

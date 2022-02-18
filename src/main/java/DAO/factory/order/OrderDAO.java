@@ -7,7 +7,7 @@ import java.util.List;
 public interface OrderDAO {
     TourOrder getOrder(int userId, int tourId);
 
-    TourOrder getUserOrder(int userId);
+    TourOrder getUserOrder(int userId,int tourId);
 
     boolean addOrder(TourOrder order);
 

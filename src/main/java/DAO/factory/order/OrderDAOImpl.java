@@ -62,7 +62,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public TourOrder getUserOrder(int userId) {
+    public TourOrder getUserOrder(int userId,int tourId) {
         TourOrder order = null;
         manager = new DBManager();
         Connection connection = null;
@@ -73,6 +73,7 @@ public class OrderDAOImpl implements OrderDAO {
             statement = connection.prepareStatement(
                     OrderSqlConst.GET_USER_ORDER);
             statement.setString(1, Integer.toString(userId));
+            statement.setString(2, Integer.toString(tourId));
             rs = statement.executeQuery();
             while (rs.next()) {
                 order = new TourOrder();
@@ -89,7 +90,7 @@ public class OrderDAOImpl implements OrderDAO {
                 }
                 order.setRegistrationDate(rs.getDate("registration_date"));
                 order.setTour(new DAOFactory().getTourDAO("jdbc").get(order.getTourId()));
-
+                return order;
             }
             DBManager.getInstance().commit(connection);
             DBManager.getInstance().close(rs);
@@ -195,7 +196,7 @@ public class OrderDAOImpl implements OrderDAO {
         try {
             connection = manager.getConnection();
             statement = connection.prepareStatement(
-                    OrderSqlConst.GET_USER_ORDER);
+                    OrderSqlConst.GET_ALL_USER_ORDERS);
             statement.setString(1, Integer.toString(userId));
             rs = statement.executeQuery();
             while (rs.next()) {

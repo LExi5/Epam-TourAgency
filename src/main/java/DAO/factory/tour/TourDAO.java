@@ -16,8 +16,10 @@ public interface TourDAO {
 
     List<Tour> getAllTours();
 
-    boolean increment(Tour tour);
+    boolean increment(int tourId);
 
-    boolean decrement(Tour tour);
+    boolean decrement(int tourId);
+
+    int getCount(int tourId);
 
 }

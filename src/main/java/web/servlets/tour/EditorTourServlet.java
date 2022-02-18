@@ -22,7 +22,6 @@ public class EditorTourServlet extends HttpServlet {
         try {
             String name = req.getParameter("name");
             int lasting = Integer.parseInt(req.getParameter("lasting"));
-            int locationId = Integer.parseInt(req.getParameter("location"));
             int hotelId = Integer.parseInt(req.getParameter("hotel"));
             String startDate = req.getParameter("startDate");
             String endDate = req.getParameter("startDate");

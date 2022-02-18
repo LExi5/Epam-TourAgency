@@ -1,6 +1,7 @@
 package DAO.factory.tour;
 
 import DAO.TourSqlConst;
+import DAO.factory.DAOFactory;
 import DAO.sql.DBManager;
 import DAO.sql.entity.Hotel;
 import DAO.sql.entity.Location;
@@ -182,10 +183,90 @@ public class TourDAOImpl implements TourDAO {
         return tours;
     }
 
-    public  boolean increment(Tour tour){
+    @Override
+    public boolean increment(int tourId) {
+        int count = new DAOFactory().getTourDAO("jdbc").getCount(tourId);
+        manager = new DBManager();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = manager.getConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(TourSqlConst.SET_COUNT_OF_PEOPLE);
+            statement.setInt(1, ++count);
+            statement.setInt(2, tourId);
+            statement.execute();
+            DBManager.getInstance().commit(connection);
+            DBManager.getInstance().close(statement);
+            DBManager.getInstance().close(connection);
+            return true;
+        } catch (SQLException e) {
+            DBManager.getInstance().rollback(connection);
+            DBManager.getInstance().close(statement);
+            DBManager.getInstance().close(connection);
+            e.printStackTrace();
+        }
         return false;
     }
-    public  boolean decrement(Tour tour){
+
+    @Override
+    public boolean decrement(int tourId) {
+        int count = new DAOFactory().getTourDAO("jdbc").getCount(tourId);
+        manager = new DBManager();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = manager.getConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(TourSqlConst.SET_COUNT_OF_PEOPLE);
+            if (count <= 0) {
+                statement.setInt(1, 0);
+            } else {
+                statement.setInt(1, count - 1);
+            }
+            statement.setInt(2, tourId);
+            statement.execute();
+            DBManager.getInstance().commit(connection);
+            DBManager.getInstance().close(statement);
+            DBManager.getInstance().close(connection);
+            return true;
+        } catch (SQLException e) {
+            DBManager.getInstance().rollback(connection);
+            DBManager.getInstance().close(statement);
+            DBManager.getInstance().close(connection);
+            e.printStackTrace();
+        }
         return false;
     }
+
+    @Override
+    public int getCount(int tourId) {
+        int count = 0;
+        manager = new DBManager();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = manager.getConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(TourSqlConst.GET_COUNT_OF_PEOPLE);
+            statement.setString(1, Integer.toString(tourId));
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt("count_people");
+            }
+            DBManager.getInstance().commit(connection);
+            DBManager.getInstance().close(rs);
+            DBManager.getInstance().close(statement);
+            DBManager.getInstance().close(connection);
+        } catch (SQLException e) {
+            DBManager.getInstance().rollback(connection);
+            DBManager.getInstance().close(rs);
+            DBManager.getInstance().close(statement);
+            DBManager.getInstance().close(connection);
+            e.printStackTrace();
+        }
+        return count;
+    }
+
 }

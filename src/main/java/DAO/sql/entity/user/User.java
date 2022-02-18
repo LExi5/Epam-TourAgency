@@ -7,7 +7,7 @@ import java.util.List;
 
 public class User {
 
-    private int userID;
+    private int id;
     private Type type;
 
     private String email;
@@ -40,12 +40,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getId() {
+        return id;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Type getType() {
@@ -99,7 +99,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userID=" + userID +
+                "userID=" + id +
                 ", type=" + type +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +

@@ -181,4 +181,11 @@ public class TourDAOImpl implements TourDAO {
         }
         return tours;
     }
+
+    public  boolean increment(Tour tour){
+        return false;
+    }
+    public  boolean decrement(Tour tour){
+        return false;
+    }
 }

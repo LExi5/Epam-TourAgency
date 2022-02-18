@@ -17,7 +17,7 @@ public class ProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        session.setAttribute("orders",new DAOFactory().getOrderDAO("jdbc").getAllUserOrders(user.getUserID()));
+        session.setAttribute("orders",new DAOFactory().getOrderDAO("jdbc").getAllUserOrders(user.getId()));
         req.getRequestDispatcher("/profile.jsp").forward(req,resp);
     }
 }

@@ -21,7 +21,7 @@ public class OrderService {
 
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        userId = user.getUserID();
+        userId = user.getId();
 
         if(new DAOFactory().getOrderDAO("jdbc").getUserOrder(userId)==null){
             System.out.println("Order never been ordered");

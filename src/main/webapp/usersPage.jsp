@@ -14,44 +14,48 @@
         crossorigin="anonymous"></script>
 <body>
 <jsp:include page="menu.jsp"></jsp:include>
-<div class="navbar navbar-expand-lg navbar-light bg-light" >
+<div class="navbar navbar-expand-lg navbar-light bg-light">
     <form class="d-flex" action="logout" method="get" style="margin-left: 15px">
         <lable>Group By</lable>
         <button class="btn btn-primary" type="submit" style="margin-left: 15px">Type</button>
     </form>
 </div>
 
-
 <div class="container">
-    <c:forEach var="user" items="${userList}">
-        <div style="display: block;
-     position: relative;
-    border-radius: 5px;
-    box-shadow: 0 20px 70px -20px rgb(0 73 112 / 60%);
-    padding: 20px 20px 20px 40px;
-    width: 100%;
-    margin: 2em 0;
-    line-height: 1.4;
-    box-sizing: border-box;
-    background-color: #fff;" class="row">
-            <div class="col">
-                <p class="card-text">${user.firstName} ${user.lastName}</p>
-                <p class="card-text">${user.email}</p>
-                <p class="card-text">${user.type}</p>
-            </div>
-            <br/>
-            <div class="col">
-                <c:choose>
-                    <c:when test="${user.isBlocked}">
-                        <button class="btn btn-primary" type="submit" style="margin-left: 15px">Unblock</button>
-                    </c:when>
-                    <c:otherwise>
-                        <button class="btn btn-primary" type="submit" style="margin-left: 15px">Block</button>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </div>
-    </c:forEach>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Type</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="user" items="${userList}">
+            <tr>
+                <th scope="row">${user.id}</th>
+                <td>${user.firstName}</td>
+                <td>${user.lastName}</td>
+                <td>${user.email}</td>
+                <td>${user.type}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${user.isBlocked}">
+                            <button class="btn btn-primary" type="submit" style="margin-left: 15px">Unblock</button>
+                        </c:when>
+                        <c:otherwise>
+                            <button class="btn btn-primary" type="submit" style="margin-left: 15px">Block</button>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
+
 </body>
 </html>

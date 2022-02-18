@@ -82,7 +82,7 @@ public class UserDAOImpl implements UserDAO {
             statement.setString(1, email);
             rs = statement.executeQuery();
             while (rs.next()) {
-                user.setUserID(rs.getInt("user_id"));
+                user.setId(rs.getInt("user_id"));
                 user.setEmail(rs.getString("email"));
                 user.setUserPassword(rs.getString("user_password"));
                 user.setFirstName(rs.getString("first_name"));
@@ -127,7 +127,7 @@ public class UserDAOImpl implements UserDAO {
             statement.setString(1, Integer.toString(id));
             rs = statement.executeQuery();
             while (rs.next()) {
-                user.setUserID(rs.getInt("user_id"));
+                user.setId(rs.getInt("user_id"));
                 user.setEmail(rs.getString("email"));
                 user.setUserPassword(rs.getString("user_password"));
                 user.setFirstName(rs.getString("first_name"));
@@ -230,7 +230,7 @@ public class UserDAOImpl implements UserDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 User user = new User();
-                user.setUserID(rs.getInt("user_id"));
+                user.setId(rs.getInt("user_id"));
                 user.setEmail(rs.getString("email"));
                 user.setUserPassword(rs.getString("user_password"));
                 user.setFirstName(rs.getString("first_name"));

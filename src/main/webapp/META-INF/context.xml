@@ -1,0 +1,13 @@
+<Context>
+    <!-- MySQL -->
+    <Resource name="jdbc/mysql"
+              auth="Container"
+              type="javax.sql.DataSource"
+              maxTotal="8" maxIdle="30" maxWait="10000"
+              username="root" password="6975"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              defaultAutoCommit="true"
+              defaultTransactionIsolation="READ_COMMITTED"
+              url="jdbc:mysql://localhost/tourproject?useSSL=false&amp;characterEncoding=UTF-8&amp;allowPublicKeyRetrieval=true"/>
+
+</Context>

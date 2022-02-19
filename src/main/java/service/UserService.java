@@ -2,11 +2,10 @@ package service;
 
 import DAO.factory.DAOFactory;
 import DAO.sql.entity.user.User;
-import service.Auth.IllegalPasswordException;
 
 public class UserService {
 
-    public static User authentication(String email, String password) throws IllegalPasswordException {
+    public static User authentication(String email, String password){
         User user = null;
         user = new DAOFactory().getUserDAO("jdbc").getByEmail(email);
         System.out.println(user.getType());
@@ -16,10 +15,9 @@ public class UserService {
         } else {
             if (user.getEmail().equals(email) && user.getUserPassword().equals(password)) {
                 return user;
-            } else {
-                throw new IllegalPasswordException("Email or password is no correct");
             }
         }
+        return null;
     }
 
     public static boolean registration(User user){

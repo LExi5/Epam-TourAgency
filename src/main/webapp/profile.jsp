@@ -1,8 +1,10 @@
 <%@ page import="static DAO.sql.entity.user.Type.USER" %>
-<%@ page import="static DAO.sql.entity.user.Type.MANAGER" %>
-<%@ page import="static DAO.sql.entity.user.Type.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="resources" />
 <html>
 <head>
     <title>Your Lovely Tour</title>
@@ -48,13 +50,13 @@
             </div>
             <div class="col">
                 <h1><c:out value="${sessionScope.user.firstName} ${sessionScope.user.lastName}"/></h1>
-                <p><b>Email:</b> <c:out value="${sessionScope.user.email}"/></p>
+                <p><b><fmt:message key="users.table.email"/></b> <c:out value="${sessionScope.user.email}"/></p>
             </div>
         </div>
     </div>
 </div>
 <br/>
-<h2 style =" text-align:center">Your Orders</h2>
+<h2 style =" text-align:center"><fmt:message key="profile.orders"/></h2>
 <br/>
 <div class="container">
     <c:forEach var="order" items="${sessionScope.orders}">
@@ -73,14 +75,14 @@
                      style="width:250px;height:175px">
             </div>
             <div class="col">
-                <h1 class="card-text" > ${order.tour.name}</h1>
-                <p class="card-text">${order.tour.description}</p>
-                <p class="card-text">Price: ${order.tour.price} €</p>
-                <p class="card-text">Start Date: ${order.tour.startDate}</p>
-                <p class="card-text">End Date: ${order.tour.endDate}</p>
+                <h5 class="card-title">${order.name}</h5>
+                <p class="card-text">${order.description}</p>
+                <p class="card-text"><fmt:message key="tour.price"/>: ${order.price} €</p>
+                <p class="card-text"><fmt:message key="tour.start.date"/> ${order.startDate}</p>
+                <p class="card-text"><fmt:message key="tour.end.date"/> ${order.endDate}</p>
             </div>
             <div class="col">
-                <p class="card-text">Registration Date ${order.registrationDate}</p>
+                <p class="card-text"><fmt:message key="profile.registration"/> ${order.registrationDate}</p>
             </div>
             <div class="col">
                 <%if(session.getAttribute("access")==USER){%>
@@ -88,9 +90,9 @@
                     <p>${order.status}</p>
                 <%} else {%>
                 <select>
-                    <option value = "reg">Registered</option>
-                    <option value = "canceled">Canceled</option>
-                    <option value = "payed">Payed</option>
+                    <option value = "reg"><fmt:message key="profile.select.registration"/></option>
+                    <option value = "canceled"><fmt:message key="profile.select.canceled"/></option>
+                    <option value = "payed"><fmt:message key="profile.select.payed"/></option>
                 </select>
                 <%}%>
             </div>

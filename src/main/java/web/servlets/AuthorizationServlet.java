@@ -1,8 +1,6 @@
 package web.servlets;
-import DAO.factory.DAOFactory;
 import DAO.sql.entity.TourOrder;
 import DAO.sql.entity.user.User;
-import service.Auth.IllegalPasswordException;
 import service.UserService;
 
 import javax.servlet.ServletException;
@@ -33,12 +31,12 @@ public class AuthorizationServlet extends HttpServlet {
                 session.setAttribute("access",user.getType());
                 session.setAttribute("user",user);
                 session.setAttribute("orders",new ArrayList<TourOrder>());
-                resp.sendRedirect(req.getContextPath()+"/index.jsp");
+                req.getRequestDispatcher("/index.jsp").forward(req, resp);
             }else{
                 req.setAttribute("massage","Email or password is incorrect");
                 req.getRequestDispatcher("/login.jsp").forward(req, resp);
             }
-        }catch (Exception | IllegalPasswordException ex){
+        }catch (Exception ex){
             req.setAttribute("massage",ex.getMessage());
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         }

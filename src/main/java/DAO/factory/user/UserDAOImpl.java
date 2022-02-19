@@ -261,4 +261,34 @@ public class UserDAOImpl implements UserDAO {
         }
         return users;
     }
+
+    @Override
+    public int getUserCount() {
+        int count = 0;
+        manager = new DBManager();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = manager.getConnection();
+            statement = connection.prepareStatement(UserSqlConst.GET_USER);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt("");
+            }
+        } catch (SQLException e) {
+            DBManager.getInstance().rollback(connection);
+            DBManager.getInstance().close(rs);
+            DBManager.getInstance().close(statement);
+            DBManager.getInstance().close(connection);
+
+            e.printStackTrace();
+        } finally {
+            DBManager.getInstance().commit(connection);
+            DBManager.getInstance().close(rs);
+            DBManager.getInstance().close(statement);
+            DBManager.getInstance().close(connection);
+        }
+        return count;
+    }
 }

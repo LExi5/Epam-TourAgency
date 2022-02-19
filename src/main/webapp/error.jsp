@@ -16,7 +16,9 @@
 </div>
 <div class="mb-3" style = "color:red;text-align:center">
     <h2 class="form-label">MASSAGE:</h2>
-    <% out.println(request.getAttribute("massage"));%>
+    <c:if test = "${massage != null}">
+        <% out.println(request.getAttribute("massage"));%>
+    </c:if>
     <br/>
 </div>
 

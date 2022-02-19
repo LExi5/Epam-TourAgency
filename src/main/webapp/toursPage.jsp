@@ -3,6 +3,11 @@
 <%@ page import="static DAO.sql.entity.user.Type.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="resources" />
+
 <html>
 <head>
     <title>Order</title>
@@ -16,14 +21,14 @@
 <jsp:include page="menu.jsp"></jsp:include>
 <div class="navbar navbar-expand-lg navbar-light bg-light">
     <form class="d-flex" action="logout" method="get" style="margin-left: 15px">
-        <lable>Sort By</lable>
-        <button class="btn btn-primary" type="submit" style="margin-left: 15px">Price</button>
-        <button class="btn btn-primary" type="submit" style="margin-left: 15px">Hotel</button>
-        <button class="btn btn-primary" type="submit" style="margin-left: 15px">Tour</button>
-        <button class="btn btn-primary" type="submit" style="margin-left: 15px">People</button>
+        <lable><fmt:message key="tour.page.sort.by"/></lable>
+        <button class="btn btn-primary" type="submit" style="margin-left: 15px"><fmt:message key="tour.page.price"/></button>
+        <button class="btn btn-primary" type="submit" style="margin-left: 15px"><fmt:message key="tour.page.hotel"/></button>
+        <button class="btn btn-primary" type="submit" style="margin-left: 15px"><fmt:message key="tour.page.tour"/></button>
+        <button class="btn btn-primary" type="submit" style="margin-left: 15px"><fmt:message key="tour.page.people"/></button>
     </form>
     <%if (session.getAttribute("access") == ADMIN) {%>
-    <a href="editTour.jsp" class="btn btn-primary" style="margin-left: 15px;margin-bottom: 15px"> + Tour</a>
+    <a href="editTour.jsp" class="btn btn-primary" style="margin-left: 15px;margin-bottom: 15px"><fmt:message key="tour.page.add"/></a>
     <%}%>
 </div>
 
@@ -47,24 +52,24 @@
             <div class="col">
                 <h5 class="card-title">${tour.name}</h5>
                 <p class="card-text">${tour.description}</p>
-                <p class="card-text">Price: ${tour.price} €</p>
-                <p class="card-text">Start Date: ${tour.startDate}</p>
-                <p class="card-text">End Date: ${tour.endDate}</p>
-                <p class="card-text">Orders: ${tour.countPeople}</p>
+                <p class="card-text"><fmt:message key="tour.price"/>: ${tour.price} €</p>
+                <p class="card-text"><fmt:message key="tour.start.date"/> ${tour.startDate}</p>
+                <p class="card-text"><fmt:message key="tour.end.date"/> ${tour.endDate}</p>
+                <p class="card-text"><fmt:message key="tour.orders"/> ${tour.countPeople}</p>
             </div>
             <br/>
             <div class="col">
                 <%if (session.getAttribute("access") == USER) {%>
-                <a href="addOrder?tourId=${tour.id}" class="btn btn-primary">Order</a>
+                <a href="addOrder?tourId=${tour.id}" class="btn btn-primary"><fmt:message key="tour.button.order"/></a>
                 <%} else if (session.getAttribute("access") == MANAGER) {%>
-                <a href="editor?tourId=${tour.id}" class="btn btn-primary">Edit</a>
+                <a href="editor?tourId=${tour.id}" class="btn btn-primary"><fmt:message key="tour.button.edit"/></a>
                 <select>
-                    <option value = "canceled">Canceled</option>
-                    <option value = "payed">Payed</option>
+                    <option value = "canceled">None</option>
+                    <option value = "payed">Fire</option>
                 </select>
                 <%} else if (session.getAttribute("access") == ADMIN) {%>
-                <a href="editor?tourId=${tour.id}" class="btn btn-primary">Edit</a>
-                <a href="deleteTour?tourId=${tour.id}" class="btn btn-primary">Delete</a>
+                <a href="editor?tourId=${tour.id}" class="btn btn-primary"><fmt:message key="tour.button.edit"/></a>
+                <a href="deleteTour?tourId=${tour.id}" class="btn btn-primary"><fmt:message key="tour.button.delete"/></a>
                 <%}%>
             </div>
             <div class="col"></div>

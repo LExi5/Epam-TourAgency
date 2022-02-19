@@ -1,8 +1,11 @@
-<%@ page import="static DAO.sql.entity.user.Type.USER" %>
-<%@ page import="static DAO.sql.entity.user.Type.MANAGER" %>
-<%@ page import="static DAO.sql.entity.user.Type.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8"
+         language="java"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="resources"/>
 <html>
 <head>
     <title>Users</title>
@@ -16,8 +19,8 @@
 <jsp:include page="menu.jsp"></jsp:include>
 <div class="navbar navbar-expand-lg navbar-light bg-light">
     <form class="d-flex" action="logout" method="get" style="margin-left: 15px">
-        <lable>Group By</lable>
-        <button class="btn btn-primary" type="submit" style="margin-left: 15px">Type</button>
+        <lable><fmt:message key="users.page.group"/></lable>
+        <button class="btn btn-primary" type="submit" style="margin-left: 15px"><fmt:message key="users.page.group.by"/></button>
     </form>
 </div>
 
@@ -26,10 +29,10 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Type</th>
+            <th scope="col"><fmt:message key="users.table.firstname"/></th>
+            <th scope="col"><fmt:message key="users.table.lastname"/></th>
+            <th scope="col"><fmt:message key="users.table.email"/></th>
+            <th scope="col"><fmt:message key="users.table.type"/></th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -44,10 +47,10 @@
                 <td>
                     <c:choose>
                         <c:when test="${user.isBlocked}">
-                            <button class="btn btn-primary" type="submit" style="margin-left: 15px">Unblock</button>
+                            <button class="btn btn-primary" type="submit" style="margin-left: 15px"><fmt:message key="users.table.blocked"/></button>
                         </c:when>
                         <c:otherwise>
-                            <button class="btn btn-primary" type="submit" style="margin-left: 15px">Block</button>
+                            <button class="btn btn-primary" type="submit" style="margin-left: 15px"><fmt:message key="users.table.unblocked"/></button>
                         </c:otherwise>
                     </c:choose>
                 </td>

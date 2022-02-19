@@ -2,6 +2,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
+
     <context-param>
         <param-name>locales</param-name>
         <param-value>en ua</param-value>
@@ -15,6 +22,52 @@
         <error-code>405</error-code>
         <location>/error.jsp</location>
     </error-page>
+
+    <filter-mapping>
+        <filter-name>localeFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>isLoginFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>localeFilter</filter-name>
+        <filter-class>web.filters.LocaleFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>web.filters.EncodingFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>isLoginFilter</filter-name>
+        <filter-class>web.filters.IsLoginFilter</filter-class>
+
+        <init-param>
+            <param-name>user-param</param-name>
+            <param-value>index.jsp tourPages.jsp profile.jsp </param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>admin-param</param-name>
+            <param-value>editTour.jsp usersPage.jsp users addOrder deleteTour</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>manager-param</param-name>
+            <param-value>editor </param-value>
+        </init-param>
+
+    </filter>
 
 </web-app>
 

@@ -20,4 +20,6 @@ public interface UserDAO {
     boolean unBlockUser(String email);
 
     List<User> getUsers();
+
+    int getUserCount();
 }

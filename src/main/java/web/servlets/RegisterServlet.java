@@ -15,16 +15,16 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String firstname = req.getParameter("fisrtname");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        String firstname = req.getParameter("firstname");
         String lastname = req.getParameter("lastname");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        User user = new User(email,password,firstname,lastname);
-        User user2 = new DAOFactory().getUserDAO("jdbc").getByEmail(email);
 
+        User user = new User(email, password, firstname, lastname);
+        System.out.println(user);
+        User user2 = new DAOFactory().getUserDAO("jdbc").getByEmail(email);
 
         if(user.getEmail().equals(user2.getEmail())){
             req.setAttribute("massage","User is already registered");
@@ -38,6 +38,7 @@ public class RegisterServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath()+"/registration.jsp");
             }
         }
+
     }
 
 }

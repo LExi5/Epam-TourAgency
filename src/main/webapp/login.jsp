@@ -1,5 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="resources" />
+
 <html>
 <head>
   <meta charset="UTF-8">
@@ -17,7 +22,7 @@
 
 <form action="authorization" method="post" style="margin-top: 15px;margin-right: 400px;margin-left:400px">
   <div class="mb-3">
-    <label class="form-label">Login</label>
+    <label class="form-label"><fmt:message key="login.title"/></label>
   </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label" style = "color:red">
@@ -29,19 +34,19 @@
     </label>
   </div>
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <label for="exampleInputEmail1" class="form-label"><fmt:message key="login.email"/></label>
     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name = "email">
   </div>
   <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <label for="exampleInputPassword1" class="form-label"><fmt:message key="login.password"/></label>
     <input type="password" class="form-control" id="exampleInputPassword1" name="password">
   </div>
   <div class="g-recaptcha"
        data-sitekey="6LelZAsTAAAAAAv1ADYDnq8AzbmPmbMvjh-xhfgB"></div>
   <br/>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary"><fmt:message key="login.submit"/></button>
   <div class="mb-3">
-  <label for="exampleInputPassword1" class="form-label">I don`t have an account</label><a href = "${pageContext.request.contextPath}/registration.jsp"> registered</a>
+  <label for="exampleInputPassword1" class="form-label"><fmt:message key="login.massage"/></label><a href = "${pageContext.request.contextPath}/registration.jsp"> <fmt:message key="login.registered"/></a>
   </div>
   <br/>
 </form>

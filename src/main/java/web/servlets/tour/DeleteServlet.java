@@ -21,12 +21,9 @@ public class DeleteServlet extends HttpServlet {
 
         if (new DAOFactory().getTourDAO("jdbc").remove(tour_id)) {
             HttpSession session = req.getSession();
-            List<Tour> tours = new DAOFactory().getTourDAO("jdbc").getAllTours();
-
-            req.setAttribute("listOfTours", tours);
-            req.getRequestDispatcher("/toursPage.jsp").forward(req, resp);
+            resp.sendRedirect("tours");
         }else{
-            req.setAttribute("massage","Couldn't delete this tour");
+            req.setAttribute("massage","This Tour been ordered");
             req.getRequestDispatcher("/error.jsp").forward(req,resp);
         }
     }

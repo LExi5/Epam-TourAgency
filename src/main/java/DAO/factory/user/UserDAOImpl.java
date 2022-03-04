@@ -217,8 +217,10 @@ public class UserDAOImpl implements UserDAO {
         return true;
     }
 
+    private int noOfRecords;
     @Override
-    public List<User> getUsers() {
+    public List<User> getUsers(int offset,
+                               int noOfRecords) {
         List<User> users = new ArrayList<>();
         manager = new DBManager();
         Connection connection = null;
@@ -226,7 +228,9 @@ public class UserDAOImpl implements UserDAO {
         ResultSet rs = null;
         try {
             connection = manager.getConnection();
-            statement = connection.prepareStatement(UserSqlConst.GET_USER);
+            statement = connection.prepareStatement(UserSqlConst.GET_USERS);
+            statement.setInt(1,offset);
+            statement.setInt(2,noOfRecords);
             rs = statement.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -262,6 +266,10 @@ public class UserDAOImpl implements UserDAO {
         return users;
     }
 
+    public int getNoOfRecords() {
+        return noOfRecords;
+    }
+
     @Override
     public int getUserCount() {
         int count = 0;
@@ -271,10 +279,10 @@ public class UserDAOImpl implements UserDAO {
         ResultSet rs = null;
         try {
             connection = manager.getConnection();
-            statement = connection.prepareStatement(UserSqlConst.GET_USER);
+            statement = connection.prepareStatement(UserSqlConst.GET_COUNT_OF_PEOPLE);
             rs = statement.executeQuery();
             while (rs.next()) {
-                count = rs.getInt("");
+                count = rs.getInt("count(*)");
             }
         } catch (SQLException e) {
             DBManager.getInstance().rollback(connection);

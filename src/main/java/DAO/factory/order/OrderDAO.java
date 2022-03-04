@@ -7,7 +7,7 @@ import java.util.List;
 public interface OrderDAO {
     TourOrder getOrder(int userId, int tourId);
 
-    TourOrder getUserOrder(int userId,int tourId);
+    TourOrder getUserOrder(int userId, int tourId);
 
     boolean addOrder(TourOrder order);
 
@@ -15,5 +15,13 @@ public interface OrderDAO {
 
     boolean deleteOrder(TourOrder order);
 
-    List<TourOrder> getAllUserOrders(int userId);
+    List<TourOrder> getAllUserOrders(int userId, int offset,
+                                     int noOfRecords);
+
+    List<TourOrder> getAllOrders(int offset,
+                                 int noOfRecords);
+
+    int getCountOfUserOrders(int userId);
+
+    int getCountOfOrders();
 }

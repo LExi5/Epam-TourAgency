@@ -41,9 +41,9 @@
                     <a type="submit" class="navbar-brand" style="margin-left: 15px" href="users"><fmt:message key="main.menu.users"/></a>
                 </li>
                 <li class="nav-item">
-                    <a type="submit" class="navbar-brand" style="margin-left: 15px" href="profile"><fmt:message key="main.menu.profile"/></a>
+                    <a type="submit" class="navbar-brand" style="margin-left: 15px" href="profile"><fmt:message key="main.menu.orders"/></a>
                 </li>
-                <%} else {%>
+                <%} else if (session.getAttribute("user") != null){%>
                 <li class="nav-item">
                     <a type="submit" class="navbar-brand" style="margin-left: 15px" href="profile"><fmt:message key="main.menu.profile"/></a>
                 </li>

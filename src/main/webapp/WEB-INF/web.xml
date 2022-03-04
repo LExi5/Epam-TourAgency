@@ -54,12 +54,12 @@
 
         <init-param>
             <param-name>user-param</param-name>
-            <param-value>index.jsp tourPages.jsp profile.jsp </param-value>
+            <param-value>index.jsp tourPages.jsp profile.jsp addOrder</param-value>
         </init-param>
 
         <init-param>
             <param-name>admin-param</param-name>
-            <param-value>editTour.jsp usersPage.jsp users addOrder deleteTour</param-value>
+            <param-value>editTour.jsp usersPage.jsp users deleteTour</param-value>
         </init-param>
 
         <init-param>
@@ -68,6 +68,7 @@
         </init-param>
 
     </filter>
+
 
 </web-app>
 

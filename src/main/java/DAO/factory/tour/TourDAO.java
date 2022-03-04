@@ -14,12 +14,17 @@ public interface TourDAO {
 
     Tour get(int id);
 
-    List<Tour> getAllTours();
+    boolean update(int tourId,String status);
+
+    List<Tour> getAllTours(int offset,
+                           int noOfRecords);
 
     boolean increment(int tourId);
 
     boolean decrement(int tourId);
 
     int getCount(int tourId);
+
+    int getCountOfTours();
 
 }

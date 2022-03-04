@@ -1,6 +1,5 @@
 package web.servlets.order;
 
-import DAO.factory.DAOFactory;
 import service.OrderService;
 
 import javax.servlet.ServletException;
@@ -10,16 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/addOrder")
-public class AddOrderServlet extends HttpServlet {
+@WebServlet("/update")
+public class ChangeStatusServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (OrderService.addOrder(req)) {
-            req.getRequestDispatcher("/toursPage.jsp").forward(req,resp);
+        if (OrderService.changeStatus(req) == false) {
+            req.setAttribute("massage","Can not change status");
+            req.getRequestDispatcher("/error.jsp").forward(req, resp);
         }
-        req.setAttribute("massage","You have already ordered this tour");
-        req.getRequestDispatcher("/error.jsp").forward(req,resp);
-
-
+        resp.sendRedirect("profile");
     }
 }

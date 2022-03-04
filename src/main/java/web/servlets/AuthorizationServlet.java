@@ -1,4 +1,5 @@
 package web.servlets;
+
 import DAO.sql.entity.TourOrder;
 import DAO.sql.entity.user.User;
 import service.UserService;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 public class AuthorizationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/login.jsp").forward(req,resp);
+        req.getRequestDispatcher("/login.jsp").forward(req, resp);
     }
 
     @Override
@@ -24,20 +25,25 @@ public class AuthorizationServlet extends HttpServlet {
         User user = null;
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        try{
-            user = UserService.authentication(email,password);
-            if(user != null){
-                HttpSession session = req.getSession();
-                session.setAttribute("access",user.getType());
-                session.setAttribute("user",user);
-                session.setAttribute("orders",new ArrayList<TourOrder>());
-                req.getRequestDispatcher("/index.jsp").forward(req, resp);
-            }else{
-                req.setAttribute("massage","Email or password is incorrect");
+        try {
+            user = UserService.authentication(email, password);
+            if (user != null) {
+                if (user.getIsBlocked() == true) {
+                    req.setAttribute("massage", "This user is blocked");
+                    req.getRequestDispatcher("/error.jsp").forward(req, resp);
+                } else {
+                    HttpSession session = req.getSession();
+                    session.setAttribute("access", user.getType());
+                    session.setAttribute("user", user);
+                    session.setAttribute("orders", new ArrayList<TourOrder>());
+                    req.getRequestDispatcher("/index.jsp").forward(req, resp);
+                }
+            } else {
+                req.setAttribute("massage", "Email or password is incorrect");
                 req.getRequestDispatcher("/login.jsp").forward(req, resp);
             }
-        }catch (Exception ex){
-            req.setAttribute("massage",ex.getMessage());
+        } catch (Exception ex) {
+            req.setAttribute("massage", ex.getMessage());
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         }
     }

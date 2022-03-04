@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${sessionScope.lang}" />
-<fmt:setBundle basename="resources" />
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="resources"/>
 <html>
 <head>
     <title>Your Lovely Tour</title>
@@ -15,16 +15,17 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <style>
-    .circle-image{
+    .circle-image {
         display: inline-block;
         border-radius: 50%;
         overflow: hidden;
         width: 50px;
         height: 50px;
     }
-    .circle-image img{
-        width:100%;
-        height:100%;
+
+    .circle-image img {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
     }
 </style>
@@ -56,49 +57,93 @@
     </div>
 </div>
 <br/>
-<h2 style =" text-align:center"><fmt:message key="profile.orders"/></h2>
 <br/>
 <div class="container">
-    <c:forEach var="order" items="${sessionScope.orders}">
-        <div style="display: block;
-     position: relative;
-    border-radius: 5px;
-    box-shadow: 0 20px 70px -20px rgb(0 73 112 / 60%);
-    padding: 20px 20px 20px 40px;
-    width: 100%;
-    margin: 2em 0;
-    line-height: 1.4;
-    box-sizing: border-box;
-    background-color: #fff;" class="row">
-            <div class="col">
-                <img class="rounded" src="https://pbs.twimg.com/media/E9YJOcmWQAczMrY.jpg" alt="Card image cap"
-                     style="width:250px;height:175px">
-            </div>
-            <div class="col">
-                <h5 class="card-title">${order.name}</h5>
-                <p class="card-text">${order.description}</p>
-                <p class="card-text"><fmt:message key="tour.price"/>: ${order.price} €</p>
-                <p class="card-text"><fmt:message key="tour.start.date"/> ${order.startDate}</p>
-                <p class="card-text"><fmt:message key="tour.end.date"/> ${order.endDate}</p>
-            </div>
-            <div class="col">
-                <p class="card-text"><fmt:message key="profile.registration"/> ${order.registrationDate}</p>
-            </div>
-            <div class="col">
-                <%if(session.getAttribute("access")==USER){%>
-                <br/>
-                    <p>${order.status}</p>
-                <%} else {%>
-                <select>
-                    <option value = "reg"><fmt:message key="profile.select.registration"/></option>
-                    <option value = "canceled"><fmt:message key="profile.select.canceled"/></option>
-                    <option value = "payed"><fmt:message key="profile.select.payed"/></option>
-                </select>
-                <%}%>
-            </div>
-            <div class="col"></div>
-        </div>
-    </c:forEach>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Dates</th>
+            <th scope="col">Status</th>
+            <th scope="col"><fmt:message key="profile.registration"/></th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="order" items="${sessionScope.orders}">
+        <tr>
+            <td><img class="rounded" src="https://pbs.twimg.com/media/E9YJOcmWQAczMrY.jpg" alt="Card image cap"
+                     style="width:250px;height:175px"></td>
+            <td>${order.tour.name}</td>
+            <td>${order.tour.description}</td>
+            <td><fmt:message key="tour.price"/>: ${order.tour.price} €</td>
+            <td><fmt:message key="tour.start.date"/> ${order.tour.startDate}
+                <fmt:message key="tour.end.date"/> ${order.tour.endDate}
+            </td>
+            <td>${order.status}</td>
+            <td>${order.registrationDate}</td>
+            <td>
+                <div class="col">
+                    <%if (session.getAttribute("access") == USER) {%>
+                    <br/>
+                    <a class="dropdown-item"
+                       href="update?tourId=${order.tourId}&userId=${order.userId}&status=CANCELLED">
+                        <button class="btn btn-outline-success" type="submit" style="margin-left: -15px"><fmt:message
+                                key="profile.select.cancel"/></button>
+                    </a>
+                    <%} else {%>
+                    <div class="dropdown" style="margin-top: 15px">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-bs-toggle="dropdown" aria-expanded="false"
+                           style="margin-right: 15px;margin-bottom: 15px">
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="color:green">
+                            <a class="dropdown-item"
+                               href="update?tourId=${order.tourId}&userId=${order.userId}&status=REGISTERED"><fmt:message
+                                    key="profile.select.registration"/></a>
+                            <a class="dropdown-item"
+                               href="update?tourId=${order.tourId}&userId=${order.userId}&status=CANCELLED"><fmt:message
+                                    key="profile.select.canceled"/></a>
+                            <a class="dropdown-item"
+                               href="update?tourId=${order.tourId}&userId=${order.userId}&status=PAYED"><fmt:message
+                                    key="profile.select.payed"/></a>
+                        </div>
+                    </div>
+                    <%}%>
+                </div>
+            </td>
+            </c:forEach>
+        </tbody>
+    </table>
+    <table class="table table-hover">
+        <tr>
+            <c:forEach begin="1" end="${noOfPages}" var="i">
+                <c:choose>
+                    <c:when test="${currentPage eq i}">
+                        <td>${i}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td><a href="profile?page=${i}"><p>${i}</p></a></td>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </tr>
+    </table>
+    <c:if test="${currentPage != 1}">
+        <td><a href="profile?page=${currentPage - 1}">
+            <button class="btn btn-primary" type="submit" style="margin-left: 15px"><fmt:message
+                    key="pagination.prev"/></button>
+        </a></td>
+    </c:if>
+    <c:if test="${currentPage lt noOfPages}">
+        <td><a href="profile?page=${currentPage + 1}">
+            <button class="btn btn-primary" type="submit" style="margin-left: 15px"><fmt:message
+                    key="pagination.next"/></button>
+        </a></td>
+    </c:if>
 </div>
 </body>
 </html>

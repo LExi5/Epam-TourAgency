@@ -81,4 +81,15 @@ public class TourOrder {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "TourOrder{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", tourId=" + tourId +
+                ", status=" + status +
+                ", registrationDate=" + registrationDate +
+                ", tour=" + tour +
+                '}';
+    }
 }

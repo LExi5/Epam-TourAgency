@@ -132,7 +132,8 @@ public class TourDAOImpl implements TourDAO {
     }
 
     @Override
-    public List<Tour> getAllTours() {
+    public List<Tour> getAllTours(int offset,
+                                  int noOfRecords) {
         List<Tour> tours = new ArrayList<>();
         manager = new DBManager();
         Connection connection = null;
@@ -141,6 +142,8 @@ public class TourDAOImpl implements TourDAO {
         try {
             connection = manager.getConnection();
             statement = connection.prepareStatement(TourSqlConst.GET_ALL_TOURS);
+            statement.setInt(1, offset);
+            statement.setInt(2, noOfRecords);
             rs = statement.executeQuery();
             while (rs.next()) {
                 Tour tour = new Tour();
@@ -267,6 +270,63 @@ public class TourDAOImpl implements TourDAO {
             e.printStackTrace();
         }
         return count;
+    }
+
+    @Override
+    public int getCountOfTours() {
+        int count = 0;
+        manager = new DBManager();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = manager.getConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(TourSqlConst.GET_COUNT_OF_TOURS);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt("count(*)");
+            }
+            DBManager.getInstance().commit(connection);
+            DBManager.getInstance().close(rs);
+            DBManager.getInstance().close(statement);
+            DBManager.getInstance().close(connection);
+        } catch (SQLException e) {
+            DBManager.getInstance().rollback(connection);
+            DBManager.getInstance().close(rs);
+            DBManager.getInstance().close(statement);
+            DBManager.getInstance().close(connection);
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public boolean update(int tourId, String status) {
+        manager = new DBManager();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            connection = manager.getConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(TourSqlConst.SET_STATUS);
+            statement.setString(1, status);
+            statement.setInt(2, tourId);
+            statement.execute();
+
+            DBManager.getInstance().commit(connection);
+            DBManager.getInstance().close(rs);
+            DBManager.getInstance().close(statement);
+            DBManager.getInstance().close(connection);
+            return true;
+        } catch (SQLException e) {
+            DBManager.getInstance().rollback(connection);
+            DBManager.getInstance().close(rs);
+            DBManager.getInstance().close(statement);
+            DBManager.getInstance().close(connection);
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

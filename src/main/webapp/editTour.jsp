@@ -53,7 +53,7 @@
             </div>
             <div class="comb-3l">
                 <label class="form-label"><fmt:message key="edit.field.status"/></label>
-                <input type="text" class="form-control" name="status">
+                <input type="text" class="form-control" name="status" value = "none">
             </div>
             <div class="mb-3">
                 <label class="form-label"><fmt:message key="edit.field.description"/></label>

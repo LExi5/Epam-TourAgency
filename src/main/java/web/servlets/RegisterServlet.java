@@ -2,6 +2,7 @@ package web.servlets;
 
 import DAO.factory.DAOFactory;
 import DAO.factory.user.UserDAOImpl;
+import DAO.sql.entity.user.Type;
 import DAO.sql.entity.user.User;
 
 import javax.servlet.ServletException;
@@ -32,6 +33,7 @@ public class RegisterServlet extends HttpServlet {
         }else{
             if(new UserDAOImpl().add(user)){
                 req.setAttribute("massage","User been registered");
+                user.setType(Type.USER);
                 resp.sendRedirect(req.getContextPath()+"/login.jsp");
             }else{
                 req.setAttribute("massage","Opps... try again");

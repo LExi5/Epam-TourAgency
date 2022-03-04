@@ -44,7 +44,12 @@ public class IsLoginFilter implements Filter {
 
         Type type = (Type) session.getAttribute("access");
         System.out.println(url);
-
+        if(user != null){
+            if(user.getIsBlocked() == true){
+                req.setAttribute("massage", "This user is blocked");
+                req.getRequestDispatcher("/error.jsp").forward(servletRequest,servletResponse);
+            }
+        }
         if ( accessPages.get(Type.ADMIN).contains(url) && type != Type.ADMIN) {
             req.setAttribute("massage", "Firstly you should login");
             req.getRequestDispatcher("/error.jsp").forward(servletRequest, servletResponse);
@@ -55,7 +60,6 @@ public class IsLoginFilter implements Filter {
             req.setAttribute("massage", "Firstly you should login");
             req.getRequestDispatcher("/error.jsp").forward(servletRequest, servletResponse);
         }
-
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

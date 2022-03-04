@@ -1,6 +1,11 @@
 <%@ page import="java.util.Date" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8"
+         language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="resources"/>
 <html>
 <head>
     <title>Your Lovely Tour</title>
@@ -11,13 +16,19 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="mb-3" style = "color:red;text-align:center">
+<div class="mb-3" style="color:red;text-align:center">
     <h1 class="form-label">ERROR</h1>
 </div>
-<div class="mb-3" style = "color:red;text-align:center">
+<div class="mb-3" style="color:red;text-align:center">
     <h2 class="form-label">MASSAGE:</h2>
-    <c:if test = "${massage != null}">
+    <c:if test="${massage != null}">
         <% out.println(request.getAttribute("massage"));%>
+    </c:if>
+    <c:if test="${massage == 'This user is blocked'}">
+        <div>
+            <a href="logout" style = "color:red"><fmt:message key="main.menu.logout"/></a>
+        </div>
+
     </c:if>
     <br/>
 </div>

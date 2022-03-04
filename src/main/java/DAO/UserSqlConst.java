@@ -9,7 +9,8 @@ public class UserSqlConst {
             "SET user.isBlocked = 1 WHERE user.email like ?";
     public static final String UNBLOCK_USER = "UPDATE tourproject.user SET user.isBlocked = 0 WHERE user.email like ?";
     public static final String GET_USER_ID = "SELECT * FROM tourproject.user WHERE user.user_id like ?";
-    public static final String GET_USER = "SELECT * " +
-            "FROM tourproject.user WHERE user.type_id != 3";
+    public static final String GET_USERS = "SELECT * " +
+            "FROM tourproject.user WHERE user.type_id != 3 limit ?,?";
+    public static String GET_COUNT_OF_PEOPLE = "SELECT count(*) from tourproject.user Where user.type_id != 3";
     public static final String GET_USERS_COUNT = "SELECT COUNT(*) FROM tourproject.user WHERE user.type_id not like 3";
 }
